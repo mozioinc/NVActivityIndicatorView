@@ -1,5 +1,30 @@
 # Change log
 
+## [v3.0](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v3.0)
+* Support Xcode 8 and Swift 3
+
+## [v2.12](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.12)
+* Fix infinite loop caused by `stopAnimation()` (#67)
+
+## [v2.11](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.11)
+* Fix when used with MBProgressHUD
+* Abilitiy to display UI blocker anywher
+* Time threshold to display UI blocker
+* Minimum display time of UI blocker
+* Deprecate some APIs
+* Add tests
+
+## [v2.10](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.10)
+* Fix UI blocker not showing full screen
+* Support tvOS
+
+## [v2.9](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.9)
+* Ability to change size of animation in UI blocker
+
+## [v2.8](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.8)
+* New Orbit animation
+* New Audio equalizer animation
+
 ## [v2.7](https://github.com/ninjaprox/NVActivityIndicatorView/releases/tag/v2.7)
 * Display as UI blocker for UIViewController
 * Be able to change defaults

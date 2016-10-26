@@ -7,40 +7,10 @@
 //
 
 import UIKit
+import Foundation
+import NVActivityIndicatorView
 
 class ViewController: UIViewController, NVActivityIndicatorViewable {
-    
-    let activityTypes: [NVActivityIndicatorType] = [
-            .BallPulse,
-            .BallGridPulse,
-            .BallClipRotate,
-            .BallClipRotatePulse,
-            .SquareSpin,
-            .BallClipRotateMultiple,
-            .BallPulseRise,
-            .BallRotate,
-            .CubeTransition,
-            .BallZigZag,
-            .BallZigZagDeflect,
-            .BallTrianglePath,
-            .BallScale,
-            .LineScale,
-            .LineScaleParty,
-            .BallScaleMultiple,
-            .BallPulseSync,
-            .BallBeat,
-            .LineScalePulseOut,
-            .LineScalePulseOutRapid,
-            .BallScaleRipple,
-            .BallScaleRippleMultiple,
-            .BallSpinFadeLoader,
-            .LineSpinFadeLoader,
-            .TriangleSkewSpin,
-            .Pacman,
-            .BallGridBeat,
-            .SemiCircleSpin,
-            .BallRotateChase
-        ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,44 +22,48 @@ class ViewController: UIViewController, NVActivityIndicatorViewable {
         let cellWidth = Int(self.view.frame.width / CGFloat(cols))
         let cellHeight = Int(self.view.frame.height / CGFloat(rows))
         
-        for i in 0 ..< activityTypes.count {
-            let x = i % cols * cellWidth
-            let y = i / cols * cellHeight
+        (NVActivityIndicatorType.ballPulse.rawValue ... NVActivityIndicatorType.audioEqualizer.rawValue).forEach {
+            let x = ($0 - 1) % cols * cellWidth
+            let y = ($0 - 1) / cols * cellHeight
             let frame = CGRect(x: x, y: y, width: cellWidth, height: cellHeight)
             let activityIndicatorView = NVActivityIndicatorView(frame: frame,
-                type: activityTypes[i])
+                type: NVActivityIndicatorType(rawValue: $0)!)
             let animationTypeLabel = UILabel(frame: frame)
             
-            animationTypeLabel.text = String(i + 1)
+            animationTypeLabel.text = String($0)
             animationTypeLabel.sizeToFit()
-            animationTypeLabel.textColor = UIColor.whiteColor()
+            animationTypeLabel.textColor = UIColor.white
             animationTypeLabel.frame.origin.x += 5
             animationTypeLabel.frame.origin.y += CGFloat(cellHeight) - animationTypeLabel.frame.size.height
             
             activityIndicatorView.padding = 20
+            if ($0 == NVActivityIndicatorType.orbit.rawValue) {
+                activityIndicatorView.padding = 0
+            }
             self.view.addSubview(activityIndicatorView)
             self.view.addSubview(animationTypeLabel)
-            activityIndicatorView.startAnimation()
+            activityIndicatorView.startAnimating()
             
             let button:UIButton = UIButton(frame: frame)
-            button.tag = i
+            button.tag = $0
             button.addTarget(self,
                 action: #selector(buttonTapped(_:)),
-                forControlEvents: UIControlEvents.TouchUpInside)
+                for: UIControlEvents.touchUpInside)
             self.view.addSubview(button)
         }
     }
     
-    func buttonTapped(sender: UIButton) {
-        startActivityAnimating("Loading...", type: activityTypes[sender.tag])
-        performSelector(#selector(delayedStopActivity),
-            withObject: nil,
+    func buttonTapped(_ sender: UIButton) {
+        let size = CGSize(width: 30, height:30)
+
+        startAnimating(size, message: "Loading...", type: NVActivityIndicatorType(rawValue: sender.tag)!)
+        perform(#selector(delayedStopActivity),
+            with: nil,
             afterDelay: 2.5)
     }
     
     func delayedStopActivity() {
-        stopActivityAnimating()
+        stopAnimating()
     }
-    
 }
 
