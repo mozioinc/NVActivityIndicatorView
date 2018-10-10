@@ -512,7 +512,7 @@ public final class NVActivityIndicatorView: UIView {
      Stop animating.
      */
     public final func stopAnimating() {
-        guard !isAnimating else {
+        guard isAnimating else {
             return
         }
         isHidden = true
